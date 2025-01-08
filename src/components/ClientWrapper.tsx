@@ -2,22 +2,33 @@
 "use client"
 
 import dynamic from 'next/dynamic'
+import ClientOnly from './hoc/ClientOnly'
 
-const MainLayout = dynamic(() => import('./layout/MainLayout'), { ssr: false })
-const IntroSection = dynamic(() => import('./sections/IntroSection'), { ssr: false })
-const PillarsSection = dynamic(() => import('./sections/PillarsSection'), { ssr: false })
-const StoneSchoolSection = dynamic(() => import('./sections/StoneSchoolSection'), { ssr: false })
-const SportsExcellenceSection = dynamic(() => import('./sections/SportsExcellenceSection'), { ssr: false })
-const InnovationSection = dynamic(() => import('./sections/InnovationSection'), { ssr: false })
+// Load Three.js components with NO SSR
+const BackgroundAnimation = dynamic(
+  () => import('./three/BackgroundAnimation'),
+  { ssr: false }
+)
+
+// Load other components normally
+const MainLayout = dynamic(() => import('./layout/MainLayout'))
+const IntroSection = dynamic(() => import('./sections/IntroSection'))
+const PillarsSection = dynamic(() => import('./sections/PillarsSection'))
+const StoneSchoolSection = dynamic(() => import('./sections/StoneSchoolSection'))
+const SportsExcellenceSection = dynamic(() => import('./sections/SportsExcellenceSection'))
+const InnovationSection = dynamic(() => import('./sections/InnovationSection'))
 
 export default function ClientWrapper() {
   return (
-    <MainLayout>
-      <IntroSection />
-      <PillarsSection />
-      <StoneSchoolSection />
-      <SportsExcellenceSection />
-      <InnovationSection />
-    </MainLayout>
+    <ClientOnly>
+      <MainLayout>
+        <BackgroundAnimation />
+        <IntroSection />
+        <PillarsSection />
+        <StoneSchoolSection />
+        <SportsExcellenceSection />
+        <InnovationSection />
+      </MainLayout>
+    </ClientOnly>
   )
 }
