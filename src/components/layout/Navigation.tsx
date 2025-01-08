@@ -1,74 +1,78 @@
 // src/components/layout/Navigation.tsx
-import { useCallback, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
+"use client"
 
-const navItems = [
-  { href: '#intro', label: 'Introduction' },
-  { href: '#piliers', label: 'Les 3 Piliers' },
-  { href: '#ecole', label: 'École de la Pierre' },
-  { href: '#sport', label: 'Excellence Sportive' },
-  { href: '#innovation', label: 'Innovation' }
+import { motion } from 'framer-motion'
+import { Gavel, Trophy, Lightbulb, Home } from 'lucide-react'
+
+interface NavigationProps {
+  activeSection: string
+}
+
+const navigationItems = [
+  { id: 'intro', label: 'Accueil', icon: Home },
+  { id: 'stone-school', label: 'École de la Pierre', icon: Gavel },
+  { id: 'sports', label: 'Excellence Sportive', icon: Trophy },
+  { id: 'innovation', label: 'Innovation', icon: Lightbulb }
 ]
 
-export default function Navigation() {
-  const [activeSection, setActiveSection] = useState('intro')
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  const handleScroll = useCallback(() => {
-    const scrollPosition = window.scrollY
-    setIsScrolled(scrollPosition > 50)
-
-    // Déterminer la section active
-    const sections = navItems.map(item => item.href.slice(1))
-    for (const section of sections) {
-      const element = document.getElementById(section)
-      if (element) {
-        const rect = element.getBoundingClientRect()
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-          setActiveSection(section)
-          break
-        }
-      }
+export default function Navigation({ activeSection }: NavigationProps) {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+  }
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        isScrolled ? 'bg-background/80 backdrop-blur-sm' : ''
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <motion.nav
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-white/10"
     >
-      <nav className="container mx-auto px-6 py-4">
-        <ul className="flex justify-center space-x-8">
-          {navItems.map(({ href, label }) => (
-            <li key={href}>
-              <Link 
-                href={href}
-                className={`relative px-3 py-2 transition-colors hover:text-primary ${
-                  activeSection === href.slice(1) ? 'text-primary' : 'text-foreground'
-                }`}
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <motion.div 
+            className="text-xl font-bold"
+            whileHover={{ scale: 1.05 }}
+          >
+            BereFondation
+          </motion.div>
+
+          {/* Navigation items */}
+          <div className="hidden md:flex space-x-8">
+            {navigationItems.map(item => (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-colors
+                  ${activeSection === item.id 
+                    ? 'bg-primary/20 text-primary' 
+                    : 'hover:bg-white/5'
+                  }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {label}
-                {activeSection === href.slice(1) && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                    layoutId="underline"
-                  />
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </motion.header>
+                <item.icon className="w-4 h-4" />
+                <span>{item.label}</span>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Mobile menu button */}
+          <motion.button
+            className="md:hidden p-2 rounded-md hover:bg-white/5"
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="space-y-1">
+              <div className="w-6 h-0.5 bg-current" />
+              <div className="w-6 h-0.5 bg-current" />
+              <div className="w-6 h-0.5 bg-current" />
+            </div>
+          </motion.button>
+        </div>
+      </div>
+    </motion.nav>
   )
 }

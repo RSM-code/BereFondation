@@ -1,18 +1,19 @@
 // src/app/page.tsx
-import dynamic from 'next/dynamic'
-import IntroSection from '../components/sections/IntroSection'
-
-// On charge l'animation de fond dynamiquement pour éviter les erreurs SSR
-const BackgroundAnimation = dynamic(
-  () => import('../components/three/BackgroundAnimation'),
-  { ssr: false }
-)
+import MainLayout from '@/components/layout/MainLayout'
+import IntroSection from '@/components/sections/IntroSection'
+import PillarsSection from '@/components/sections/PillarsSection'
+import StoneSchoolSection from '@/components/sections/StoneSchoolSection'
+import SportsExcellenceSection from '@/components/sections/SportsExcellenceSection'
+import InnovationSection from '@/components/sections/InnovationSection'
 
 export default function Home() {
   return (
-    <main className="relative">
-      <BackgroundAnimation />
+    <MainLayout>
       <IntroSection />
-    </main>
+      <PillarsSection />
+      <StoneSchoolSection />
+      <SportsExcellenceSection />
+      <InnovationSection />
+    </MainLayout>
   )
 }
