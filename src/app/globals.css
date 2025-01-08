@@ -1,0 +1,342 @@
+/**
+ * Fichier de styles globaux
+ * =========================
+ * Ce fichier contient :
+ * 1. Configuration Tailwind
+ * 2. Variables CSS (light/dark mode)
+ * 3. Styles de base
+ * 4. Utilitaires personnalisés
+ * 5. Animations
+ * 6. Ajustements mobile & safe areas
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------- */
+/* Variables CSS et thème            */
+/* --------------------------------- */
+@layer base {
+  :root {
+    /* Couleurs de base */
+    --background: 32 17% 90%;
+    /* #D9C8B0 plus léger */
+    --foreground: 330 14% 10%;
+    /* #191318 */
+
+    /* Surface et cartes */
+    --card: 0 0% 100%;
+    --card-foreground: 330 14% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 330 14% 10%;
+
+    /* Couleurs principales */
+    --primary: 17 53% 60%;
+    /* #D97859 */
+    --primary-foreground: 330 14% 10%;
+    --secondary: 15 35% 65%;
+    /* #D19781 */
+    --secondary-foreground: 330 14% 10%;
+
+    /* Accents et états */
+    --muted: 32 17% 85%;
+    --muted-foreground: 330 14% 30%;
+    --accent: 17 53% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Effets visuels */
+    --glass: 0 0% 100%;
+    --glass-foreground: 330 14% 10%;
+    --overlay: 32 17% 90%;
+
+    /* États sémantiques */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 150 40% 50%;
+    --success-foreground: 355.7 100% 97.3%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 48 96% 89%;
+    --info: 214 95% 93%;
+    --info-foreground: 214 80% 50%;
+
+    /* Interface */
+    --border: 17 53% 60% / 0.1;
+    --input: 17 53% 60% / 0.1;
+    --ring: 17 53% 60%;
+
+    /* Bordures */
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --radius-lg: 1rem;
+
+    /* Safe areas */
+    --sat: env(safe-area-inset-top);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+    --sar: env(safe-area-inset-right);
+  }
+
+  .dark {
+    --background: 330 14% 12%;
+    /* Version sombre de #191318 */
+    --foreground: 32 17% 90%;
+
+    --card: 330 14% 12%;
+    --card-foreground: 32 17% 90%;
+    --popover: 330 14% 12%;
+    --popover-foreground: 32 17% 90%;
+
+    --primary: 17 43% 45%;
+    /* Version sombre de #D97859 */
+    --primary-foreground: 32 17% 90%;
+    --secondary: 15 25% 45%;
+    /* Version sombre de #D19781 */
+    --secondary-foreground: 32 17% 90%;
+
+    --muted: 330 14% 20%;
+    --muted-foreground: 32 17% 70%;
+    --accent: 17 43% 50%;
+    --accent-foreground: 32 17% 90%;
+
+    --glass: 330 14% 15%;
+    --glass-foreground: 32 17% 90%;
+    --overlay: 330 14% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 32 17% 90%;
+    --border: 17 43% 45% / 0.2;
+    --input: 17 43% 45% / 0.2;
+    --ring: 17 43% 45%;
+  }
+}
+
+/* --------------------------------- */
+/* Styles de base                    */
+/* --------------------------------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    padding-top: var(--sat);
+    padding-bottom: var(--sab);
+    padding-left: var(--sal);
+    padding-right: var(--sar);
+  }
+
+  button,
+  .button {
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+/* --------------------------------- */
+/* Utilitaires                       */
+/* --------------------------------- */
+@layer utilities {
+
+  /* Effet bois plus solide et mat */
+  .wood-accent {
+    @apply bg-primary text-primary-foreground shadow-md;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      inset 0 1px 0 rgb(255 255 255 / 0.1);
+  }
+
+  .dark .wood-accent {
+    @apply bg-primary shadow-lg;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.2),
+      inset 0 1px 0 rgb(255 255 255 / 0.05);
+  }
+
+  /* Effet verre plus prononcé avec reflets */
+  .glass-card {
+    @apply bg-white/25 dark:bg-black/25 backdrop-blur-md rounded-lg border border-white/20 shadow-lg;
+    background: linear-gradient(120deg,
+        rgb(255 255 255 / 0.3) 0%,
+        rgb(255 255 255 / 0.15) 100%);
+    box-shadow:
+      0 8px 16px -4px rgb(0 0 0 / 0.15),
+      0 4px 8px -4px rgb(0 0 0 / 0.1),
+      inset 0 0 0 1px rgb(255 255 255 / 0.15),
+      inset 0 1px 1px rgb(255 255 255 / 0.2);
+  }
+
+  .dark .glass-card {
+    background: linear-gradient(120deg,
+        rgb(255 255 255 / 0.1) 0%,
+        rgb(255 255 255 / 0.05) 100%);
+    box-shadow:
+      0 8px 16px -4px rgb(0 0 0 / 0.3),
+      0 4px 8px -4px rgb(0 0 0 / 0.2),
+      inset 0 0 0 1px rgb(255 255 255 / 0.1),
+      inset 0 1px 1px rgb(255 255 255 / 0.05);
+  }
+
+  /* Overlay avec coins arrondis et effet amélioré */
+  .glass-overlay {
+    @apply bg-black/40 dark:bg-black/20 backdrop-blur-lg rounded-lg;
+    background: linear-gradient(135deg,
+        rgb(255 255 255 / 0.3) 55%,
+        transparent 100%);
+  }
+
+  .dark .glass-overlay {
+    @apply bg-black/40 dark:bg-black/20 backdrop-blur-lg rounded-lg;
+    background: linear-gradient(135deg,
+        rgb(255 255 255 / 0.2) 0%,
+        transparent 100%);
+  }
+
+  /* Helpers layout */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .grid-center {
+    @apply grid place-items-center;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+  /* Wave effect container et effet */
+  .wave-container {
+    @apply relative overflow-hidden rounded-lg;
+  }
+
+  .wave-effect {
+    @apply absolute inset-0 rounded-lg;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgb(0 0 0 / 0.1) 25%,
+        rgb(0 0 0 / 0.2) 50%,
+        rgb(0 0 0 / 0.1) 75%,
+        transparent 100%);
+  }
+
+  .dark .wave-effect {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgb(255 255 255 / 0.2) 25%,
+        rgb(255 255 255 / 0.4) 50%,
+        rgb(255 255 255 / 0.2) 75%,
+        transparent 100%);
+  }
+}
+
+/* --------------------------------- */
+/* Animations                        */
+/* --------------------------------- */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+/* Classes d'animation */
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-wave {
+  animation: wave 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* --------------------------------- */
+/* Mobile & Safe Areas               */
+/* --------------------------------- */
+.top-bar {
+  padding-top: max(16px, var(--sat));
+  height: calc(64px + var(--sat));
+}
+
+.bottom-nav {
+  padding-bottom: var(--sab);
+  min-height: calc(4rem + var(--sab));
+}
+
+.mobile-container {
+  padding-left: max(1rem, var(--sal));
+  padding-right: max(1rem, var(--sar));
+}
+
+.notch-area {
+  padding-top: max(env(safe-area-inset-top), 16px);
+}
