@@ -1,16 +1,18 @@
-// src/components/ClientWrapper.tsx
 "use client"
 
 import dynamic from 'next/dynamic'
 import ClientOnly from './hoc/ClientOnly'
 
-// Load Three.js components with NO SSR
+// Charger BackgroundAnimation sans SSR et avec un fallback
 const BackgroundAnimation = dynamic(
   () => import('./three/BackgroundAnimation'),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => <div className="fixed inset-0 -z-10 bg-background" />
+  }
 )
 
-// Load other components normally
+// Charger les autres composants normalement
 const MainLayout = dynamic(() => import('./layout/MainLayout'))
 const IntroSection = dynamic(() => import('./sections/IntroSection'))
 const PillarsSection = dynamic(() => import('./sections/PillarsSection'))
@@ -21,8 +23,8 @@ const InnovationSection = dynamic(() => import('./sections/InnovationSection'))
 export default function ClientWrapper() {
   return (
     <ClientOnly>
+      <BackgroundAnimation />
       <MainLayout>
-        <BackgroundAnimation />
         <IntroSection />
         <PillarsSection />
         <StoneSchoolSection />
