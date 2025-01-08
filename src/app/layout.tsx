@@ -6,9 +6,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'BereFondation - Vision Tridimensionnelle',
-  description: 'Une fondation innovante alliant tradition, excellence et futur',
-  keywords: ['fondation', 'innovation', 'tradition', 'excellence'],
+  title: 'BereFondation',
+  description: 'Une vision tridimensionnelle pour l\'avenir',
 }
 
 export default function RootLayout({
@@ -17,12 +16,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className="scroll-smooth">
-      <body className={`${inter.className} antialiased min-h-screen bg-background`}>
-        {/* Ajout ultérieur du composant BackgroundAnimation ici */}
-        <div className="relative z-10">
-          {children}
-        </div>
+    <html lang="fr" suppressHydrationWarning>
+      <body className={inter.className}>
+        {children}
       </body>
     </html>
   )
