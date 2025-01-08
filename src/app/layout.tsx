@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="fr" className="dark notch-area">
+      <body className={`${inter.className} antialiased`}>
         {children}
       </body>
     </html>
