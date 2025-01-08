@@ -1,21 +1,52 @@
+/* src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 32 17% 90%;
+    --foreground: 330 14% 10%;
+    --primary: 17 53% 60%;
+    --primary-foreground: 330 14% 10%;
+    --secondary: 15 35% 65%;
+    --secondary-foreground: 330 14% 10%;
+    --muted: 32 17% 85%;
+    --muted-foreground: 330 14% 30%;
+    --accent: 17 53% 55%;
+    --accent-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 330 14% 12%;
+    --foreground: 32 17% 90%;
+    --primary: 17 43% 45%;
+    --primary-foreground: 32 17% 90%;
+    --secondary: 15 25% 45%;
+    --secondary-foreground: 32 17% 90%;
+    --muted: 330 14% 20%;
+    --muted-foreground: 32 17% 70%;
+    --accent: 17 43% 50%;
+    --accent-foreground: 32 17% 90%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .glass-panel {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-lg shadow-lg;
+  }
+  
+  .title-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .section-container {
+    @apply min-h-screen flex items-center justify-center py-20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
