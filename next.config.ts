@@ -1,10 +1,10 @@
 // next.config.ts
-import type { Configuration } from "webpack";
 import type { NextConfig } from "next";
+import type { Configuration as WebpackConfig } from "webpack";
 
 const config: NextConfig = {
   reactStrictMode: true,
-  webpack: (config: Configuration) => {
+  webpack: (config: WebpackConfig) => {
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
